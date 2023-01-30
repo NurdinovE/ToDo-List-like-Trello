@@ -1,0 +1,38 @@
+.toDoContent{
+    display: flex;
+    justify-content: space-evenly;
+}
+.toDoLvl{
+    width: 320px;
+}
+.toDoTitle{
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    margin-bottom: 30px;
+    letter-spacing: -0.0075em;
+    color: #667085;
+}
+.toDoItem{
+    margin-bottom: 25px;
+    background: #FFffff;
+    border-radius: 8px;
+    padding: 20px;
+}
+.DnDArrea {
+    width: 350px;
+    min-height: 350px;
+}
+.itemTitle{
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: #1D2939;
+    margin-bottom: 20px;
+}
+

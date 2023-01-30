@@ -1,0 +1,42 @@
+nav{
+    position: fixed;
+    z-index: 50;
+    margin: 20px 0 0 30px;
+    display: flex;
+    align-items: center;
+}
+.menu li {
+    list-style-type: none;
+}
+.menu li a {
+    text-decoration: none;
+    font-family: sans-serif;
+    color: #000;
+}
+.burgerArrow{
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    transition: 1s;
+}
+.burgerArrow.active{
+    margin-left: 110px;
+    transform: rotate(180deg);
+}
+.burgerBtn{
+    font-family: 'Karla';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 25px;
+    line-height: 19px;
+    letter-spacing: -0.03em;
+    color: #1D2939;
+    cursor: pointer;
+    position: relative;
+}
+
+
+
