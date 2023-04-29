@@ -1,5 +1,5 @@
 import React from 'react';
-import {Paper} from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { Draggable } from 'react-beautiful-dnd';
 import { Delete } from '@material-ui/icons';
@@ -11,8 +11,8 @@ const useStyle = makeStyles((theme) => ({
     cart: {
         fontFamily: 'sans-serif',
         fontWeight: '500',
-        padding: theme.spacing(1,1,1,2),
-        margin:theme.spacing(1),
+        padding: theme.spacing(1, 1, 1, 2),
+        margin: theme.spacing(1),
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: "center",
@@ -22,32 +22,36 @@ const useStyle = makeStyles((theme) => ({
     }
 }));
 
-const Todo = ({ card, index }) => {
+const Todo = ({ card, index, list }) => {
     const classes = useStyle()
+    const { removeTask } = useContext(storeApi)
 
-    const {removeTask} = useContext(storeApi)
-
-    const handleDelete = () => {
-        removeTask(card.id)
+    const handleDelete = (id, listId) => {
+        removeTask(id, listId)
     }
 
 
     return (
-        <Draggable draggableId={card.id} index = {index}>
+        <Draggable draggableId={card.id} index={index}>
             {(provided) => (
                 <div
-                ref={provided.innerRef}
-                {...provided.dragHandleProps} 
-                {...provided.draggableProps}
+                    ref={provided.innerRef}
+                    {...provided.dragHandleProps}
+                    {...provided.draggableProps}
                 >
-                    <Paper className={classes.cart}>{card.title}<Delete className={classes.deleteIcon} onClick={handleDelete()}/></Paper>
-            
+                    <Paper className={classes.cart}>
+                        {card.title}
+                        <Delete
+                            className={classes.deleteIcon}
+                            onClick={() => handleDelete(card.id, list)}
+                        />
+                    </Paper>
                 </div>
-                )}
+            )}
 
-                
+
         </Draggable>
-        
+
     );
 };
 

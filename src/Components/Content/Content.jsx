@@ -1,76 +1,97 @@
-import React,{ useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ToDoInfo from "./ToDoInfo/ToDoInfo.jsx"
 import StoreApi from "../../utlts/storeApi.jsx";
 import store from "../../utlts/store"
-import {v4 as uuid} from "uuid"
+import { v4 as uuid } from "uuid"
 import InputContainer from "./Input/InputContainer.jsx";
 import { DragDropContext } from "react-beautiful-dnd";
 
 
 
 const Content = () => {
-    const [ data, setData ] = useState(store)
-    
+  const [data, setData] = useState(store)
 
-    
-  
-    const addMoreCard = (title,listId) => {
-        const newCardId = uuid()
-        const newCard = {
-            id: newCardId,
-            title
-        };
-        const list = data.lists[listId]
-        list.cards=[...list.cards,newCard]
+  localStorage.setItem('todo', JSON.stringify(data))
 
-        const newState = {
-            ...data,
-            lists:{
-                ...data.lists,
-                [listId]: list
-            }
-        }
-        setData(newState)
+  const addMoreCard = (title, listId) => {
+    const newCardId = uuid()
+    const newCard = {
+      id: newCardId,
+      title
+    };
+    const list = data.lists[listId]
+    list.cards = [...list.cards, newCard]
+
+    const newState = {
+      ...data,
+      lists: {
+        ...data.lists,
+        [listId]: list
+      }
     }
-    
-    const addMoreList = (title) => {
-        const newListId = uuid()
-        const newList = {
-            id: newListId,
-            title,
-            cards:[]
-        }
-        const newState = {
-            listIds: [...data.listIds,newListId],
-            lists:{
-                ...data.lists,
-                [newListId]: newList
-            }
-        }
-        setData(newState)
+    setData(newState)
+  }
 
+  const addMoreList = (title) => {
+    const newListId = uuid()
+    const newList = {
+      id: newListId,
+      title,
+      cards: []
+    }
+    const newState = {
+      listIds: [...data.listIds, newListId],
+      lists: {
+        ...data.lists,
+        [newListId]: newList
+      }
+    }
+    setData(newState)
+
+  }
+
+  const updateListTitle = (title, listId) => {
+    const list = data.lists[listId]
+    list.title = title
+    const newState = {
+      ...data,
+      lists: {
+        ...data.lists,
+        [listId]: list
+      },
+    }
+    setData(newState)
+  }
+
+
+
+  const removeTask = (id, listId) => {
+    let str = listId
+    console.log(str);
+
+    const list = data.lists
+    console.log(list);
+
+    const newCards = list[listId].cards.filter((card) => card.id !== id);
+    const newList = { ...list[listId], cards: newCards };
+    console.log(newCards);
+
+    const newData = {
+      ...data,
+      lists: {
+        ...data.lists,
+        [listId]: {
+          ...list[listId],
+          cards: newCards
+        }
+      }
     }
 
-    const updateListTitle = (title, listId) => {
-        const list = data.lists[listId]
-        list.title = title
-        const newState = {
-            ...data,
-            lists: {
-                ...data.lists,
-                [listId]: list
-            },
-        }
-        setData(newState)
-    }
+    setData(newData);
+    console.log(newData)
+  }
 
 
-
-    const removeTask = (id) => {
-        
-    }
-
-    
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
     if (!destination) {
@@ -109,26 +130,24 @@ const Content = () => {
       setData(newState);
     }
   };
-  
-  
- 
 
 
-    return(
-        <StoreApi.Provider value={{ addMoreCard, addMoreList, updateListTitle, removeTask }}>
-                <DragDropContext onDragEnd={onDragEnd}>
-                <div className="container">
-                {data.listIds.map((listId) => {
-                    const list = data.lists[listId]
-                    return <ToDoInfo list = {list} key = {listId}/>
-                })}
-              
-                </div>
-                </DragDropContext>
-              
-        </StoreApi.Provider>
-        
-    )
+
+  return (
+    <StoreApi.Provider value={{ addMoreCard, addMoreList, updateListTitle, removeTask }}>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="container">
+          {data?.listIds.map((listId) => {
+            const list = data.lists[listId]
+            return <ToDoInfo list={list} key={listId} listId={listId} />
+          })}
+
+        </div>
+      </DragDropContext>
+
+    </StoreApi.Provider>
+
+  )
 }
 
 export default Content

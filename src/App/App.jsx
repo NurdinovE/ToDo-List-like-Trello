@@ -13,9 +13,7 @@ function App() {
     const [ menuActive, setMenuActive ] = useState()
     return (
         <div className="App">
-            
             <Header active={ menuActive } setActive={ setMenuActive }/>
-
             <Routes>
                 <Route path="/" element={ <Content /> }/>
                 <Route path="/profile" element={ <Profile/> }/>

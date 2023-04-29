@@ -19,11 +19,8 @@ const useStyle = makeStyles((theme) => ({
         marginTop: theme.spacing(4),
     }
 }));
-const ToDoInfo = ({ list, index }) => {
+const ToDoInfo = ({ list, listId }) => {
     const classes = useStyle()
-
-
-
     return(
         <div>
             <Paper className={classes.root}>
@@ -32,7 +29,7 @@ const ToDoInfo = ({ list, index }) => {
                     {(provided) =>(
                         <div ref={provided.innerRef} {...provided.droppableProps} className={classes.cardContainer}>
                             {list.cards.map((card, index) => (
-                            <Todo key = {card.id} card = { card } index={ index }/>
+                            <Todo key = {card.id} card = { card } index={ index } list={listId}/>
                             ))}
                             {provided.placeholder}
                         </div>
